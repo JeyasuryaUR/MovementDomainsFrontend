@@ -1,0 +1,55 @@
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { FaSearch, FaStar } from "react-icons/fa";
+import { VectorClaim } from "./svg-components/SVGAssets";
+import { useWallet } from "@/context/WalletContext";
+import { toast } from "react-toastify";
+
+const SearchForm: React.FC = () => {
+  const [inputText, setInputText] = useState("");
+  const router = useRouter();
+  const { isWalletConnected } = useWallet();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isWalletConnected) {
+      if (inputText.trim()) {
+        router.push(`/buy/${inputText}`);
+      }
+    } else {
+      toast.error("Connect wallet to submit");
+    }
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col md:flex-row gap-3 w-full md:w-fit items-center px-4 py-2 rounded-sm border border-solid shadow-xl border-zinc-400 bg-white bg-opacity-25"
+    >
+      <div className="flex items-center gap-2 w-full md:w-auto">
+        <FaSearch />
+        <label htmlFor="nameSearch" className="sr-only">
+          Search your name
+        </label>
+        <input
+          type="text"
+          id="nameSearch"
+          placeholder="Search your name"
+          className="text-base md:text-xl bg-inherit w-full md:w-fit text-stone-900 outline-0"
+          aria-label="Search your name"
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+        />
+      </div>
+      <button
+        type="submit"
+        className="flex gap-2 justify-center items-center w-full md:w-auto px-4 py-2 rounded-sm text-base md:text-xl font-medium tracking-tighter text-white bg-moveyellow"
+      >
+        <VectorClaim className="p-0 m-0" />
+        <span className="self-stretch">claim now</span>
+      </button>
+    </form>
+  );
+};
+
+export default SearchForm;
