@@ -10,12 +10,7 @@ import { FaEllipsisVertical, FaEthereum } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa";
 import { LuCopy } from "react-icons/lu";
 import bg1 from "@/assets/images/bg1.png";
-import {
-  getDomainExpiryDate,
-  getDomainsByAddress,
-  getWalletAddress,
-} from "@/contracts/contract";
-import { useWallet } from "@/context/WalletContext";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 
 type TabProps = {
   label: string;
@@ -49,7 +44,7 @@ const NamePage = () => {
     // "More",
   ];
 
-  const { walletAddress } = useWallet();
+  const { account, connected } = useWallet();
   // const [domains, setDomains] = useState<string[]>([]);
 
   // useEffect(() => {
@@ -71,15 +66,17 @@ const NamePage = () => {
 
   useEffect(() => {
     const fetchExpiryTime = async () => {
-      const expiryTime = await getDomainExpiryDate(domain);
-      const expiryDate = expiryTime
-        ? new Date(expiryTime.toNumber() * 1000).toLocaleString()
-        : "Permanent";
-      setExpiryTime(expiryDate);
+      const expiryTime = null;
+      //TODO:- Fetch expiry time from the blockchain
+      // const expiryDate = expiryTime
+      //   ? new Date(expiryTime?.toNumber() * 1000).toLocaleString()
+      //   : "Permanent";
+      
+      setExpiryTime("Permanent");
     };
 
     fetchExpiryTime();
-  }, [domain, walletAddress]);
+  }, [domain, account?.address]);
 
   return (
     <main className="py-2 flex flex-col justify-center items-center h-full">
@@ -142,7 +139,7 @@ const NamePage = () => {
                     <div className="flex overflow-hidden gap-2 justify-center items-center px-4 py-1.5 mt-2.5 bg-white rounded-sm border border-solid shadow-sm border-zinc-300">
                       <FaEthereum />
                       <div className="self-stretch my-auto">
-                        {walletAddress ? walletAddress : "Loading..."}
+                        {account?.address ? account.address : "Loading..."}
                       </div>
                       <FaEllipsisVertical />
                     </div>
@@ -161,7 +158,7 @@ const NamePage = () => {
                           owner
                         </div>
                         <div className="self-stretch my-auto">
-                          {walletAddress ? walletAddress : "Loading..."}
+                          {account?.address ? account.address : "Loading..."}
                         </div>
                         <FaEllipsisVertical />
                       </div>
@@ -176,7 +173,7 @@ const NamePage = () => {
                         <div className="self-stretch my-auto opacity-50">
                           parent
                         </div>
-                        <div className="self-stretch my-auto">nil</div>
+                        <div className="self-stretch my-auto">move</div>
                         <FaEllipsisVertical />
                       </div>
                     </div>

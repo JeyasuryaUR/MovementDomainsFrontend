@@ -4,6 +4,7 @@ import { BiMinusCircle, BiPlusCircle } from "react-icons/bi";
 import gweiIcom from "@/assets/icons/gwei.svg";
 import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa";
+import React from "react";
 
 interface BuyDomainStep1Props {
   domain: string;
@@ -30,7 +31,7 @@ const BuyDomainStep1: React.FC<BuyDomainStep1Props> = ({
     <>
       <section className="flex w-full justify-start p-1 mb-2">
         <div className="flex gap-3 items-center text-xl font-bold text-black">
-          <span>{domain}.nil</span>
+          <span>{domain}.move</span>
           <LuCopy />
         </div>
       </section>
@@ -41,7 +42,7 @@ const BuyDomainStep1: React.FC<BuyDomainStep1Props> = ({
             <h1 className="gap-2 self-stretch p-2 w-full text-3xl font-bold tracking-tighter leading-none text-zinc-800">
               Register{" "}
               <span className="relative">
-                <span>{domain}.nil</span>
+                <span>{domain}.move</span>
                 <span className="absolute bottom-0 left-0 w-full h-1 bg-moveyellow rounded-full"></span>
               </span>
             </h1>
@@ -81,13 +82,13 @@ const BuyDomainStep1: React.FC<BuyDomainStep1Props> = ({
                   <div className="flex items-center py-1 px-1 rounded bg-slate-200">
                     <button
                       className={`self-stretch px-3 py-1 my-auto rounded ${
-                        currency === "ETH"
+                        currency === "APT"
                           ? "text-white bg-moveyellow shadow-md"
                           : "text-black text-opacity-70"
                       }`}
-                      onClick={() => setCurrency("ETH")}
+                      onClick={() => setCurrency("APT")}
                     >
-                      ETH
+                      APT
                     </button>
                     <button
                       className={`self-stretch py-1 px-3 my-auto rounded ${

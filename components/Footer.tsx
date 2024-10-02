@@ -74,7 +74,7 @@ const Footer = () => {
             className="text-white font-semibold text-center"
             style={{ textShadow: "2px 2px 4px rgba(0, 0, 255, 0.5)" }}
           >
-            ©2024 NILLION. ALL RIGHTS RESERVED.
+            ©2024 Movement Labs. ALL RIGHTS RESERVED.
           </p>
         </div>
         {/* <div className="absolute bottom-0 left-0 right-0 z-[-1] pointer-events-none">

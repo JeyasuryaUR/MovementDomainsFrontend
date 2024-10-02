@@ -1,9 +1,12 @@
-"use client";
+"use client"; // Required for client-side rendering
 import React from "react";
-import { useWallet, WalletProvider } from "@/context/WalletContext";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./Header"; // Assuming you have this component
+import Footer from "./Footer"; // Assuming you have this component
+import { WalletProvider } from "@/components/WalletProvider";
+import { Toaster } from "@/components/ui/toaster";
+import { WrongNetworkAlert } from "@/components/WrongNetworkAlert"; // Assuming WalletContext is set up correctly
 import { ToastContainer } from "react-toastify";
+ 
 
 interface ClientWrapperProps {
   children: React.ReactNode;
@@ -12,7 +15,9 @@ interface ClientWrapperProps {
 const ClientWrapper: React.FC<ClientWrapperProps> = ({ children }) => {
   return (
     <WalletProvider>
-      <InnerClientWrapper>{children}</InnerClientWrapper>
+      <div className="flex flex-col bg-moveyellow relative max-w-screen min-h-screen justify-between">
+        <InnerClientWrapper>{children}</InnerClientWrapper>
+      </div>
     </WalletProvider>
   );
 };
@@ -20,15 +25,12 @@ const ClientWrapper: React.FC<ClientWrapperProps> = ({ children }) => {
 const InnerClientWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
+      <Header />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col w-full">
-        <Header />
-        <div className="z-10">
-          <div
-          >
-            {children}
-          </div>
-        </div>
-        <ToastContainer />
+        {/* Children will be injected here */}
+        <div className="z-10">{children}</div>
+        <WrongNetworkAlert /> {/* Your network alert component */}
+        <Toaster /> {/* Toast notifications */}
       </div>
       <Footer />
     </>

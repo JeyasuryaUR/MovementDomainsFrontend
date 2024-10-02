@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
-
+import { registerDomain } from "@/entry-functions/registerDomain";
+import { aptosClient } from "@/utils/aptosClient";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 interface BuyDomainStep3Props {
   domain: string;
   onClose: () => void;
@@ -18,6 +20,7 @@ const BuyDomainStep3: React.FC<BuyDomainStep3Props> = ({
   onDomainRegister,
   domainRegistrationStatus,
 }) => {
+  const {account, signAndSubmitTransaction} = useWallet();
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
 
   useEffect(() => {
@@ -35,7 +38,10 @@ const BuyDomainStep3: React.FC<BuyDomainStep3Props> = ({
 
   const handleRegister = async () => {
     try {
+      
+
       const status = await onDomainRegister();
+      
       // onNextStep();
       await console.log(status);
       if (status === 100) {
@@ -76,7 +82,7 @@ const BuyDomainStep3: React.FC<BuyDomainStep3Props> = ({
               Name
             </div>
             <div className="self-stretch my-auto font-medium text-zinc-600">
-              {domain}.nil
+              {domain}.move
             </div>
           </div>
           <div className="flex flex-wrap gap-10 justify-between items-center px-6 py-5 mt-2 w-full tracking-tighter leading-none bg-white rounded-lg border border-solid border-zinc-800 border-opacity-40">

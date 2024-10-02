@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaSearch, FaStar } from "react-icons/fa";
 import { VectorClaim } from "./svg-components/SVGAssets";
-import { useWallet } from "@/context/WalletContext";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { toast } from "react-toastify";
 
 const SearchForm: React.FC = () => {
   const [inputText, setInputText] = useState("");
   const router = useRouter();
-  const { isWalletConnected } = useWallet();
+  const { connected } = useWallet();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (isWalletConnected) {
+    if (connected) {
       if (inputText.trim()) {
         router.push(`/buy/${inputText}`);
       }
