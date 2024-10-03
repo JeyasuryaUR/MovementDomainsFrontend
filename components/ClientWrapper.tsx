@@ -20,11 +20,10 @@ const ClientWrapper: React.FC<ClientWrapperProps> = ({ children }) => {
 const InnerClientWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col w-full">
+      <div className="px-4 sm:px-6 lg:px-8 flex flex-col w-full">
         <Header />
         <div className="z-10">
-          <div
-          >
+          <div>
             {children}
           </div>
         </div>

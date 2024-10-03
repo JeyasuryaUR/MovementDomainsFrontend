@@ -36,10 +36,10 @@ const UserMenu: React.FC = () => {
   return (
     <button
       onClick={handleConnectWallet}
-      className="flex flex-col px-2.5 max-md:px-1 my-auto text-lg max-md:text-sm font-medium whitespace-nowrap bg-moveyellow rounded border border-gray-300 text-zinc-50"
+      className="flex flex-col px-2.5 max-md:px-1 my-auto text-lg max-md:text-sm font-medium whitespace-nowrap bg-black rounded text-white"
     >
       <div className="flex gap-2 items-center py-2 px-2.5 rounded-2xl">
-        <BiWallet className="text-white w-[24px] h-[24px]" />
+        <BiWallet className=" w-[24px] h-[24px]" />
         <div className=" flex-1 my-auto">
           {walletAddress ? formatAddress(walletAddress) : "Connect Wallet"}
         </div>

@@ -21,7 +21,7 @@ const Footer = () => {
   return (
     <>
       
-      <footer className="flex w-full px-32 relative flex-col justify-center self-center items-center max-md:mt-4 max-sm:mt-8 z-10 py-4 sm:py-6 md:py-8 text-black bg-gradient-to-t from-moveyellow to-transparent">
+      <footer className="flex w-full px-4 md:px-16 lg:px-32 relative flex-col justify-center self-center items-center max-md:mt-4 max-sm:mt-8 z-10 py-4 sm:py-6 md:py-8 text-black bg-gradient-to-t from-moveyellow to-transparent">
         <div className="flex flex-col sm:flex-row justify-between items-center border-b-2 border-gray-500 pb-4 w-full gap-6 sm:gap-8">
           {/* <LogoFooter className="w-24 sm:w-24 md:w-24" /> */}
           <Link href="/" className="w-24 sm:w-24 md:w-24">
@@ -59,8 +59,8 @@ const Footer = () => {
                   onClick={() => setActiveLink(link.label)}
                   className={`${
                     activeLink === link.label
-                      ? "text-moveyellow"
-                      : "text-moveyellow max-sm:text-white"
+                      ? "text-orange-100"
+                      : "text-white"
                   } hover:text-yellow-700 transition-colors`}
                 >
                   <link.icon className="lg w-6 h-6" />

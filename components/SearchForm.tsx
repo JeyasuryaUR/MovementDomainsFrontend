@@ -29,21 +29,21 @@ const SearchForm: React.FC = () => {
       <div className="flex items-center gap-2 w-full md:w-auto">
         <FaSearch />
         <label htmlFor="nameSearch" className="sr-only">
-          Search your name
+          Enter your domain
         </label>
         <input
           type="text"
           id="nameSearch"
-          placeholder="Search your name"
+          placeholder="Enter your domain"
           className="text-base md:text-xl bg-inherit w-full md:w-fit text-stone-900 outline-0"
-          aria-label="Search your name"
+          aria-label="Enter your domain"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
         />
       </div>
       <button
         type="submit"
-        className="flex gap-2 justify-center items-center w-full md:w-auto px-4 py-2 rounded-sm text-base md:text-xl font-medium tracking-tighter text-white bg-moveyellow"
+        className="flex gap-2 justify-center whitespace-nowrap items-center w-full md:w-auto px-4 py-2 rounded-sm text-base md:text-xl font-medium tracking-tighter text-white bg-blue-700"
       >
         <VectorClaim className="p-0 m-0" />
         <span className="self-stretch">claim now</span>
