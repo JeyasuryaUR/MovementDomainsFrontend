@@ -2,19 +2,14 @@
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import UserMenu from "./UserMenu";
 import Image from "next/image";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { useWallet } from "@/context/WalletContext";
+import { WalletSelector } from "./WalletSelector"; // Use WalletSelector instead of UserMenu
 
 const Header: React.FC = () => {
   const pathname = usePathname();
-  const isMyDomainsRoute = pathname.startsWith("/mydomains");
-
   const [activeLink, setActiveLink] = useState("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const { isWalletConnected, updateWalletConnection } = useWallet();
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -34,8 +29,8 @@ const Header: React.FC = () => {
         />
       </Link>
 
-      {/* Center Navigation */}
-      <nav className="hidden md:flex gap-6 lg:gap-10 text-base lg:text-lg items-center ">
+      {/* Center Navigation (Desktop) */}
+      <nav className="hidden md:flex gap-6 lg:gap-10 text-base lg:text-lg items-center">
         {navLinks.map((link) => (
           <Link
             key={link.href}
@@ -87,14 +82,15 @@ const Header: React.FC = () => {
             ))}
             {/* Wallet Button */}
             <div className="mt-4">
-              <UserMenu />
+              <WalletSelector /> {/* Use WalletSelector here */}
             </div>
           </nav>
         </div>
       )}
 
-      <div className="mt-4 hidden md:flex">
-        <UserMenu />
+      {/* Wallet Button (Desktop) */}
+      <div className="hidden md:flex">
+        <WalletSelector /> {/* Use WalletSelector here */}
       </div>
     </header>
   );

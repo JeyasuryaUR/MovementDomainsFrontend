@@ -3,13 +3,8 @@ import DomainListingCard from "./DomainListingCard";
 import nameProfile from "@/assets/icons/nameProfile.svg";
 import { FaAngleDown, FaAngleUp, FaSearch } from "react-icons/fa";
 import { CgMaximizeAlt } from "react-icons/cg";
-import {
-  getDomainExpiryDate,
-  getDomainPrice,
-  getDomainsByAddress,
-  getWalletAddress,
-} from "@/contracts/contract";
-import { useWallet } from "@/context/WalletContext";
+
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 
 interface Domain {
   name: string;
@@ -18,37 +13,37 @@ interface Domain {
 }
 
 const DomainList: React.FC = () => {
-  const { walletAddress } = useWallet();
+  const { account , connected} = useWallet();
   const [domainObjects, setDomainObjects] = useState<Domain[]>([]);
 
   useEffect(() => {
     // Fetch user domains
     const fetchUserDomains = async () => {
-      if (walletAddress) {
-        const domains = await getDomainsByAddress();
-        if (domains) {
-          const domainObjects = await Promise.all(
-            domains.map(async (domain: string) => {
-              const expiryTime = await getDomainExpiryDate(domain);
-              const expiryDate = expiryTime
-                ? new Date(expiryTime.toNumber() * 1000).toLocaleString()
-                : "Permanent";
-              return {
-                name: domain,
-                expiryTime: expiryDate,
-                imageUrl: nameProfile,
-              };
-            })
-          );
-          setDomainObjects(domainObjects);
-        } else {
-          console.error("getDomainsOwnedByUser did not return an array");
-        }
+      if (account && connected) {
+        // const domains = await getDomainsByAddress();
+        // if (domains) {
+        //   const domainObjects = await Promise.all(
+        //     domains.map(async (domain: string) => {
+        //       const expiryTime = await getDomainExpiryDate(domain);
+        //       const expiryDate = expiryTime
+        //         ? new Date(expiryTime.toNumber() * 1000).toLocaleString()
+        //         : "Permanent";
+        //       return {
+        //         name: domain,
+        //         expiryTime: expiryDate,
+        //         imageUrl: nameProfile,
+        //       };
+        //     })
+        //   );
+          setDomainObjects([]);
+        // } else {
+        //   console.error("getDomainsOwnedByUser did not return an array");
+        // }
       }
     };
 
     fetchUserDomains();
-  }, [walletAddress]);
+  }, [account, connected]);
 
   return (
     <main className="flex flex-col relative mb-0 w-full md:w-fit px-4 ">

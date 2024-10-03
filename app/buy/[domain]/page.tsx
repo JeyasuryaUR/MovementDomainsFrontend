@@ -6,20 +6,22 @@ import BuyDomainStep1 from "@/components/BuyDomainStep1";
 import BuyDomainStep2 from "@/components/BuyDomainStep2";
 import BuyDomainStep3 from "@/components/BuyDomainStep3";
 import BuyDomainCompleted from "@/components/BuyDomainCompleted";
-import { getDomainPrice, registerUserDomain } from "@/contracts/contract";
-import { ethers } from "ethers";
-import { useWallet } from "@/context/WalletContext";
+import { registerDomain } from "@/entry-functions/registerDomain";
+import { getDomainPrice } from "@/view-functions/getDomainPrice";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { toast } from "react-toastify";
+import { aptosClient } from "@/utils/aptosClient";
 
 const BuyPage = () => {
-  const { isWalletConnected } = useWallet();
+  const { connected, account, signAndSubmitTransaction } = useWallet();
+  const isWalletConnected = connected && account;
 
   const params = useParams();
   const domain = Array.isArray(params.domain)
     ? params.domain[0]
     : params.domain;
 
-  const [currency, setCurrency] = useState("ETH");
+  const [currency, setCurrency] = useState("APT");
   const [currentStep, setCurrentStep] = useState(1);
   const [year, setYear] = useState(1);
   const [txLink, setTxLink] = useState<string | null>(null);
@@ -33,10 +35,37 @@ const BuyPage = () => {
 
   const handleRegister = async (): Promise<number> => {
     try {
-      setStatus(1); // Connecting wallet & Registering domain
-      const transactionLink = await registerUserDomain(domain, year); // Register the domain
+
+      if (!isWalletConnected){
+        toast.error("Please connect your wallet");
+      }
+      setStatus(1); // Registering domain
+
+
+      console.log("Registering domain:", domain);
+      console.log("Registration duration:", year, "year(s)");
+
+
+      const committedTransaction = await signAndSubmitTransaction(
+        registerDomain({
+          domain_name: domain,
+          registration_duration_secs: year * 31536000, // 1 year in seconds
+        }),
+      );
+
+
+      console.log("Committed transaction:", committedTransaction);
+       // Connecting wallet & Registering domain
+       const transactionLink = `https://explorer.aptoslabs.com/txn/${committedTransaction.hash}?network=testnet`;
+      console.log("Transaction link:", transactionLink);
+      const executedTransaction = await aptosClient().waitForTransaction({
+        transactionHash: committedTransaction.hash,
+      }); 
+      console.log("Executed transaction:", executedTransaction);
+      console.log("Executed transaction hash:", executedTransaction.hash);
+      
       setTxLink(transactionLink);
-      await setStatus(100); // Domain registered successfully
+      setStatus(100); // Domain registered successfully
       return 100;
     } catch (error) {
       console.error(error);
@@ -48,7 +77,7 @@ const BuyPage = () => {
         // Handle the case where error is not an instance of Error
         toast.error("An unknown error occurred");
       }
-      await setStatus(-1); // Error registering domain
+      setStatus(-1); // Error registering domain
       return -1;
     }
     // return status;
@@ -57,11 +86,20 @@ const BuyPage = () => {
   useEffect(() => {
     const fetchDomainPrice = async () => {
       try {
-        const price = (year * 0.05 * (100 - (year - 1) * 5)) / 100; //await getDomainPrice(domain, year);
+        console.log("Fetching domain price for:", domain, year, "year(s)");
+        
+        const octaPrice = await getDomainPrice({
+          domain_length: domain.length,
+          registration_secs: year * 31536000,
+        });
+
+        const price = octaPrice / 100_000_000;
+
+        console.log("Domain price:", price);
         if (!price) {
           throw new Error("Price is undefined");
         }
-        // const formattedPrice = `${ethers.utils.formatEther(price)} ETH`;
+        
         setPriceItems((prevItems) => [
           prevItems[0],
           prevItems[1],

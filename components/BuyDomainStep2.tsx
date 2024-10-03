@@ -49,7 +49,7 @@ const BuyDomainStep2: React.FC<BuyDomainStep2Props> = ({
     <>
       <section className="flex w-full justify-start p-1 mb-2">
         <div className="flex gap-3 items-center text-xl font-bold text-black">
-          <span>{domain}.nil</span>
+          <span>{domain}.move</span>
           <LuCopy />
         </div>
       </section>
@@ -113,13 +113,13 @@ const BuyDomainStep2: React.FC<BuyDomainStep2Props> = ({
                   <div className="flex items-center py-1 px-1 rounded bg-slate-200">
                     <button
                       className={`self-stretch px-3 py-1 my-auto rounded ${
-                        currency === "ETH"
+                        currency === "APT"
                           ? "text-white bg-moveyellow shadow-md"
                           : "text-black text-opacity-70"
                       }`}
-                      onClick={() => setCurrency("ETH")}
+                      onClick={() => setCurrency("APT")}
                     >
-                      ETH
+                      APT
                     </button>
                     <button
                       className={`self-stretch py-1 px-3 my-auto rounded ${

@@ -30,16 +30,17 @@ const BuyDomainCompleted: React.FC<BuyDomainCompletedProps> = ({
                     width={50}
                     height={50}
                   />
-                  <div className="self-stretch my-auto">{domain}.nil</div>
+                  <div className="self-stretch my-auto">{domain}.move</div>
                 </div>
                 <div className="flex flex-col justify-center mt-4 md:mt-8">
                   <div className="flex flex-col leading-none">
                     <h1 className="text-xl md:text-2xl font-bold">
                       Congratulations!
                     </h1>
+                    
                     <h2 className="mt-2 text-xl md:text-2xl font-medium">
                       You are now the owner of{" "}
-                      <span className="italic font-bold">{domain}.nil</span>
+                      <span className="italic font-bold">{domain}.move</span>
                     </h2>
                   </div>
                   <p className="mt-4 text-sm md:text-md flex text-wrap text-clip">
