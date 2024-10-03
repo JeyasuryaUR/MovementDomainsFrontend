@@ -10,7 +10,7 @@ const FeaturesComponent = () => {
     ];
 
     return (
-        <div className='flex justify-end mx-auto pb-4 sm:px-6'>
+        <div className='flex mx-auto pb-4 '>
             <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-1 gap-4 sm:gap-6 '>
                 {features.map((feature, index) => (
                     <div
