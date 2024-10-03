@@ -18,7 +18,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useToast } from "@/components/ui/use-toast";
 import {
   APTOS_CONNECT_ACCOUNT_URL,
   AboutAptosConnect,
@@ -42,10 +41,11 @@ import {
 } from "lucide-react";
 import React from "react";
 import { useCallback, useState } from "react";
+import { FaWallet } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 export function WalletSelector() {
   const { account, connected, disconnect, wallet } = useWallet();
-  const { toast } = useToast();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const closeDialog = useCallback(() => setIsDialogOpen(false), []);
@@ -54,16 +54,9 @@ export function WalletSelector() {
     if (!account?.address) return;
     try {
       await navigator.clipboard.writeText(account.address);
-      toast({
-        title: "Success",
-        description: "Copied wallet address to clipboard.",
-      });
+      toast.success("Copied wallet address to clipboard.");
     } catch {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Failed to copy wallet address.",
-      });
+      toast.error("Failed to copy wallet address.");
     }
   }, [account?.address, toast]);
 
@@ -71,10 +64,11 @@ export function WalletSelector() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button>
+          <FaWallet className="h-4 w-4" />
           {account?.ansName || truncateAddress(account?.address) || "Unknown"}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="bg-white">
         <DropdownMenuItem onSelect={copyAddress} className="gap-2">
           <Copy className="h-4 w-4" /> Copy address
         </DropdownMenuItem>
@@ -98,7 +92,10 @@ export function WalletSelector() {
   ) : (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button>Connect a Wallet</Button>
+        <Button>
+          <FaWallet className="h-4 w-4" />
+          Connect a Wallet
+          </Button>
       </DialogTrigger>
       <ConnectWalletDialog close={closeDialog} />
     </Dialog>
@@ -117,7 +114,7 @@ function ConnectWalletDialog({ close }: ConnectWalletDialogProps) {
   const hasAptosConnectWallets = !!aptosConnectWallets.length;
 
   return (
-    <DialogContent className="max-h-screen overflow-auto">
+    <DialogContent className="bg-white max-h-screen overflow-auto">
       <AboutAptosConnect renderEducationScreen={renderEducationScreen}>
         <DialogHeader>
           <DialogTitle className="flex flex-col text-center leading-snug">

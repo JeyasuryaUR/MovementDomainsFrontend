@@ -81,7 +81,7 @@ const Header: React.FC = () => {
               </Link>
             ))}
             {/* Wallet Button */}
-            <div className="mt-4">
+            <div className="mt-4 bg-white">
               <WalletSelector /> {/* Use WalletSelector here */}
             </div>
           </nav>
@@ -89,7 +89,7 @@ const Header: React.FC = () => {
       )}
 
       {/* Wallet Button (Desktop) */}
-      <div className="hidden md:flex">
+      <div className="hidden md:flex bg-white ">
         <WalletSelector /> {/* Use WalletSelector here */}
       </div>
     </header>

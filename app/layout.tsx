@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
-import { Toaster } from "@/components/ui/toaster";
-import  Header  from "@/components/Header";
-import {WalletProvider} from "@/components/WalletProvider";
-import { WrongNetworkAlert } from "@/components/WrongNetworkAlert";
 import ClientWrapper from "@/components/ClientWrapper";
 export const metadata: Metadata = {
   title: "Move Name Service",
